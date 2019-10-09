@@ -27,7 +27,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "title too long" do
-    @post.title = "a"*1001
+    @post.title = "a"*62
     assert_not @post.valid?
   end
 
@@ -35,5 +35,20 @@ class PostTest < ActiveSupport::TestCase
     @post.save
     post2 = @post.dup
     assert_not post2.valid?
+  end
+
+  test "test if content is empty" do
+    @post.content = nil
+    assert_not @post.valid?
+  end
+
+  test "content too short" do
+    @post.content = "aaaa"
+    assert_not @post.valid?
+  end
+
+  test "content too long" do
+    @post.content = "a"*1001
+    assert_not @post.valid?
   end
 end
